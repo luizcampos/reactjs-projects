@@ -1,4 +1,5 @@
 import { ArticleNyTimes } from "phosphor-react";
+import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css"
 
@@ -7,10 +8,10 @@ export function Post(){
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <img
-                        className={styles.avatar} 
-                        src="https://avatars.githubusercontent.com/u/17790186?v=4">
-                    </img>
+                    <Avatar
+                        src="https://avatars.githubusercontent.com/u/17790186?v=4"
+                        hasBorder={true}
+                    />
                     <div className={styles.authorInfo}>
                         <strong>Luiz Fellipe</strong>
                         <span>Web Developer</span>

@@ -1,0 +1,22 @@
+.avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.avatarWithBoder {
+    width: calc(3rem + 12px); /*12px soma de border e outline */
+    height: calc(3rem + 12px); /*12px soma de border e outline*/
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+
+    border: 4px solid var(--gray-800);
+    outline: 2px solid var(--green-500);
+}
