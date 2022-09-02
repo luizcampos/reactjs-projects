@@ -1,4 +1,4 @@
-import { ArticleNyTimes } from "phosphor-react";
+import { ArticleNyTimes, Cpu } from "phosphor-react";
 
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -29,9 +29,24 @@ export function Post(props){
     }
 
     function handleNewCommentChange(){
-
-        setNewCommentText(event.target.value); //value do textarea, pois o event ocorre nesse elemento
+        event.target.setCustomValidity(''); //para deixar de ser obrigatório (comportamente do JS)
+        setNewCommentText(event.target.value); //value do textarea, pois o event ocorre nesse elemento. Roda a cada letra digitada
     }
+
+    function handleNewCommentInvalid(){
+        event.target.setCustomValidity('Esse campo é obrigatório');
+    }
+
+    function deleteComment(commentToDelete){
+
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment != commentToDelete; //retorna true? fica, senão nem adiciona - método filter()
+        })
+
+        setComments(commentsWithoutDeletedOne);
+    }
+
+    const isNewCommentEmpty = newCommentText.length == 0;
 
     return (
         <article className={styles.post}>
@@ -57,9 +72,9 @@ export function Post(props){
             <div className={styles.content}>
                 {props.content.map(line => {
                     if (line.type == 'paragraph'){
-                        return <p>{line.content}</p>
+                        return <p key={line.content}>{line.content}</p>
                     } else if (line.type == 'link'){
-                        return <p><a href="#">{line.content}</a></p>
+                        return <p key={line.content}><a href="#">{line.content}</a></p>
                     }
                 })}
             </div>
@@ -72,15 +87,25 @@ export function Post(props){
                     placeholder="Deixe um comentário"
                     value={newCommentText} //é sempre o valor desse estado 'newCommentText'
                     onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommentInvalid} //sempre que der inválido por causa do 'required'
+                    required
                 />
                 <footer>
-                    <button type="submit">Publicar</button>
+                    <button 
+                        type="submit"
+                        disabled={isNewCommentEmpty} //condição em variável. Se true, desabilita
+                    >Publicar
+                    </button>
                 </footer>
             </form>
 
             <div className={styles.commentList}>
                 { comments.map(comment => {
-                    return <Comment content={comment} />
+                    return <Comment 
+                    key={comment}
+                    content={comment} 
+                    onDeleteComment={deleteComment} //passando função! comunicação entre comentários
+                    />
                 }) }
             </div>
         </article>

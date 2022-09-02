@@ -1,8 +1,22 @@
 import { ThumbsUp, Trash } from 'phosphor-react';
+import { useState } from 'react';
 import { Avatar } from './Avatar';
 import styles from './Comment.module.css';
 
 export function Comment(props){
+
+    const [likeCount, setLikeCount] = useState(0); //0 é um valor inicial de likes do comentário
+
+    function handleDeleteComment(){
+        props.onDeleteComment(props.content) //deveria ser o id, mas aqui chama a função de Post.jsx e passa o conteúdo do comentário clicado no ícone de lixeira
+    }
+
+    function handleLikeComment(){
+        setLikeCount((lastNumberLikes) => {
+            return lastNumberLikes + 1;
+        });
+    }
+
     return(
         <div className={styles.comment}>
             <Avatar
@@ -21,7 +35,7 @@ export function Comment(props){
                             </time>
                         </div>
 
-                        <button title="Deletar comentário">
+                        <button onClick={handleDeleteComment} title="Deletar comentário">
                             <Trash size={24}/>
                         </button>
                     </header>
@@ -29,9 +43,9 @@ export function Comment(props){
                 </div>
 
                 <footer>
-                    <button>
+                    <button onClick={handleLikeComment}>
                         <ThumbsUp/>
-                        Aplaudir <span>20</span>
+                        Aplaudir <span>{likeCount}</span>
                     </button>
                 </footer>
             </div>

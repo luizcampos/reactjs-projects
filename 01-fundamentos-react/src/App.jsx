@@ -47,6 +47,7 @@ export function App() {
           {posts.map(post => {  /*map() roda cada posição, iteração*/
             return (
               <Post
+                key={post.id}
                 author={post.author}
                 content={post.content}
                 publishedAt={post.publishedAt}
